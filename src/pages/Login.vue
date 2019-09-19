@@ -95,25 +95,25 @@
     float: none;
     border-radius: 8px;
     padding: 50px;
-  }
 
-  .el-form-item__error {
-    position: relative;
-    color: #f60507;
-  }
+    .el-form-item__error {
+      position: relative;
+      color: #f60507;
+    }
 
-  .el-input__inner {
-    height: 45px;
-    padding-left: 40px;
-  }
+    .el-input__inner {
+      height: 45px;
+      padding-left: 40px;
+    }
 
-  .el-form-item.is-error .el-input__inner,
-  .el-form-item.is-error .el-input__inner:focus,
-  .el-form-item.is-error .el-textarea__inner,
-  .el-form-item.is-error .el-textarea__inner:focus,
-  .el-message-box__input input.invalid,
-  .el-message-box__input input.invalid:focus {
-    border-color: #3872f6;
+    .el-form-item.is-error .el-input__inner,
+    .el-form-item.is-error .el-input__inner:focus,
+    .el-form-item.is-error .el-textarea__inner,
+    .el-form-item.is-error .el-textarea__inner:focus,
+    .el-message-box__input input.invalid,
+    .el-message-box__input input.invalid:focus {
+      border-color: #3872f6;
+    }
   }
 
 </style>
