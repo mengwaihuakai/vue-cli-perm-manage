@@ -136,11 +136,6 @@
     height: 500px;
   }
 
-  .hint{
-    color: #3872f6;
-    font-size: 14px;
-  }
-
   .icon-pwd{
     position: absolute;
     top: 14px;
