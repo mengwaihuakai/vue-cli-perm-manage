@@ -10,7 +10,19 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',//把所有的静态资源打包到 static文件夹下
     assetsPublicPath: '/',//设置绝对路径，比如https://www.yourdomain.com/,则打包后的路径，全部会加上这个 前缀
-    proxyTable: {},
+    proxyTable: {
+      //这里理解成用‘/’代替target里面的地址，后面组件中我们掉接口时直接用domain代替 比如我要调用'http://40.00.100.100:3002/user/add'，直接写‘//user/add’即可
+      '/': {
+        target: 'http://192.168.1.122:8075',//你要跨域的网址  http必须要有
+        secure: true,  // 如果是https接口，需要配置这个参数
+        changeOrigin: true,//这个参数是用来回避跨站问题的，配置完之后发请求时会自动修改http header里面的host，但是不会修改别的
+        pathRewrite: {
+          '^/': ''//路径的替换规则
+          //这里的配置是正则表达式，以/domain开头的将会被用用‘/’替换掉，假如后台文档的接口是 //list/xxx
+          //前端domain接口写：axios.get('//list/xxx') ， 被处理之后实际访问的是：http://news.baidu.com//list/xxx
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

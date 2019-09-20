@@ -46,19 +46,19 @@
           ref = this.$refs;
         },
         methods: {
-          focus: () => {
+          focus () {
             app.hint = '';
           },
-          submitForm: formName => {
+          submitForm (formName) {
             app.hint = '';
             let vm = this;
             ref[formName].validate((valid) => {
               if (valid) {
-                console.log(vm.api)
-                vm.api.post("tologin", app.login)
+                vm.api.post("/tologin", vm.login)
                   .then((r) => {
                     if (r.data.code === 0) {
-                      window.location.href = "/";
+                      console.log(r.data.length)
+                      /*window.location.href = "/";*/
                     } else {
                       app.hint = r.data.message;
                     }

@@ -8,6 +8,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/sass/common.scss'//全局样式
 
+Vue.use(ElementUI)
 Vue.config.productionTip = false
 axios.create({
   timeout: 180000
@@ -15,8 +16,6 @@ axios.create({
 axios.defaults.baseURL = '/'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 Vue.prototype.api = axios
-
-Vue.use(ElementUI)
 
 /* eslint-disable no-new */
 new Vue({
