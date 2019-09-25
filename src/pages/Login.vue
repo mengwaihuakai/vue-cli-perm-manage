@@ -20,8 +20,9 @@
 </template>
 
 <script>
-  let ref = null;
+  import { mapActions } from 'vuex'
 
+  let ref = null;
   export default {
         name: "Login",
         data(){
@@ -46,25 +47,28 @@
           ref = this.$refs;
         },
         methods: {
+          ...mapActions(['addPerms']),
           focus () {
-            app.hint = '';
+            this.hint = '';
           },
           submitForm (formName) {
-            app.hint = '';
             let vm = this;
+            vm.hint = '';
             ref[formName].validate((valid) => {
               if (valid) {
-                vm.api.post("/tologin", vm.login)
+                vm.api.post("tologin", vm.login)
                   .then((r) => {
                     if (r.data.code === 0) {
-                      console.log(r.data.length)
-                      /*window.location.href = "/";*/
+                      //vm.$store.dispatch('如果不用mapAction, 调用vuex中action的方法');
+                      //vm.$store.commit('如果不用mapMutations, 调用vuex中mutation的方法');
+                      vm.addPerms(r.data.resultMap.perms);//前提是：...mapActions(['addPerms'])
+                      vm.$router.push({path: '/index'});//js中设置路由跳转
                     } else {
-                      app.hint = r.data.message;
+                      vm.hint = r.data.message;
                     }
                   })
                   .catch((e) => {
-                    app.hint = r.data.message;
+                    vm.hint = e;
                   })
               }
             })
@@ -98,7 +102,6 @@
 
     .el-form-item__error {
       position: relative;
-      color: #f60507;
     }
 
     .el-input__inner {
@@ -134,6 +137,10 @@
     margin: auto;
     width: 500px;
     height: 500px;
+  }
+
+  .hint {
+    color: #F56C6C
   }
 
   .icon-pwd{
