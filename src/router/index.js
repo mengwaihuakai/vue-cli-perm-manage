@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Store from '../store'
 import Login from '@/pages/Login' // 写法一
-/* import Index from '@/pages/Index' */
+import Main from '@/pages/Main'
 
 Vue.use(Router)
 
@@ -19,12 +19,15 @@ let route = new Router({
       component: Login // 写法一
     },
     {
-      path: '/index',
+      path: '/',
       name: 'Index',
-      component: resolve => {
-        return require(['../pages/Index.vue'], resolve) // 写法二
-      },
-      meta: 'offeer'
+      component: Main,
+      children: [
+        {
+          path: 'index',
+          component: resolve => { return require(['../pages/contentPages/Index.vue'], resolve) } // 写法二
+        }],
+      meta: 'offer'// 权限名称
     }
   ]
 })

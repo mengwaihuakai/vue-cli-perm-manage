@@ -1,21 +1,23 @@
 <template>
-  <div class="container">
-    <h2>ADX</h2>
-    <el-form :model="login" :rules="rules" ref='loginForm'>
-      <el-form-item label="" prop="account">
-        <i class="icon el-icon-user-solid"></i>
-        <el-input autocomplete="off" v-model="login.account" clearable @focus="focus" placeholder="Please input account"></el-input>
-      </el-form-item>
-      <el-form-item label="" prop="password">
-        <i class="icon el-icon-lock"></i>
-        <el-input :type="pwdValShow ? 'text' : 'password'" v-model="login.password" @focus="focus" autocomplete="off"  placeholder="Please input password"></el-input>
-        <i class="icon-pwd el-icon-view" v-show="!!login.password" @click="pwdValShow = !pwdValShow"></i>
-      </el-form-item>
-      <el-row class="hint"><small>{{hint}}</small></el-row>
-      <el-row>
-        <el-button type="primary" size="small" class="login_btn" @click="submitForm('loginForm')">LOGIN</el-button>
-      </el-row>
-    </el-form>
+  <div id="login">
+    <div class="container">
+      <h2>ADX</h2>
+      <el-form :model="login" :rules="rules" ref='loginForm'>
+        <el-form-item label="" prop="account">
+          <i class="icon el-icon-user-solid"></i>
+          <el-input autocomplete="off" v-model="login.account" clearable @focus="focus" placeholder="Please input account"></el-input>
+        </el-form-item>
+        <el-form-item label="" prop="password">
+          <i class="icon el-icon-lock"></i>
+          <el-input :type="pwdValShow ? 'text' : 'password'" v-model="login.password" @focus="focus" autocomplete="off"  placeholder="Please input password"></el-input>
+          <i class="icon-pwd el-icon-view" v-show="!!login.password" @click="pwdValShow = !pwdValShow"></i>
+        </el-form-item>
+        <el-row class="hint"><small>{{hint}}</small></el-row>
+        <el-row>
+          <el-button type="primary" size="small" class="login_btn" @click="submitForm('loginForm')">LOGIN</el-button>
+        </el-row>
+      </el-form>
+    </div>
   </div>
 </template>
 
@@ -47,7 +49,7 @@
           ref = this.$refs;
         },
         methods: {
-          ...mapActions(['addPerms']),
+          ...mapActions(['addPerms', 'setAccount']),
           focus () {
             this.hint = '';
           },
@@ -62,6 +64,7 @@
                       //vm.$store.dispatch('如果不用mapAction, 调用vuex中action的方法');
                       //vm.$store.commit('如果不用mapMutations, 调用vuex中mutation的方法');
                       vm.addPerms(r.data.resultMap.perms);//前提是：...mapActions(['addPerms'])
+                      vm.setAccount(r.data.resultMap.account);
                       vm.$router.push({path: '/index'});//js中设置路由跳转
                     } else {
                       vm.hint = r.data.message;
@@ -78,13 +81,6 @@
 </script>
 
 <style lang="scss">
-  #app{
-    background: url(../assets/images/login/bg.jpg) repeat;
-    color: #fff;
-    font-family: "微软雅黑";
-    font-size: 14px;
-  }
-
   @media (max-width: 767px) {
     .el-form {
       padding: 30px 40px;
@@ -122,6 +118,15 @@
 </style>
 
 <style scoped>
+  #login{
+    width: 100vw;
+    height: 100vh;
+    background: url(../assets/images/login/bg.jpg) repeat;
+    color: #fff;
+    font-family: "微软雅黑";
+    font-size: 14px;
+  }
+
   @media (max-width: 767px) {
     .container {
       width: 80vw;
@@ -155,7 +160,8 @@
 
   h2{
     text-align: center;
-    font-size: 30px
+    font-size: 30px;
+    margin: 25px;
   }
 
   .icon{
