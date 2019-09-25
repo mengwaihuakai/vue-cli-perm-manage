@@ -51,7 +51,7 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
+    import { mapGetters, mapActions } from 'vuex'
 
     export default {
       name: "Main",
@@ -59,13 +59,18 @@
         ...mapGetters(['getAccount']),
       },
       methods: {
+        ...mapActions(['truncatState']),
         logout () {
           let vm = this;
           vm.api.post("logout")
             .then((r) => {
+              sessionStorage.removeItem('store');
+              vm.truncatState();
               vm.$router.push({path: '/login'});
             })
             .catch((e) => {
+              sessionStorage.removeItem('store');
+              vm.truncatState();
               vm.$router.push({path: '/login'});
             })
         }
@@ -80,7 +85,6 @@
         if (sessionStorage.getItem("store") ) {
           this.$store.replaceState(Object.assign({}, this.$store.state, JSON.parse(sessionStorage.getItem("store"))))
         }
-
         //在页面刷新时将vuex里的信息保存到sessionStorage里
         window.addEventListener("beforeunload",()=>{
           sessionStorage.setItem("store",JSON.stringify(this.$store.state))

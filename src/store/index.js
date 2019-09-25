@@ -18,6 +18,11 @@ const store = new Vuex.Store({
     },
     setAccount (state, account) {
       state.account = account
+    },
+    truncatState (state) {
+      for (let key in state) {
+        delete state[key]
+      }
     }
   },
   actions: {
@@ -26,6 +31,9 @@ const store = new Vuex.Store({
     },
     setAccount ({commit}, account) { // 获取一个与store 实例具有相同方法的属性的context对象 context 解构为 {commit, state}
       commit('setAccount', account)
+    },
+    truncatState ({commit}) {
+      commit('truncatState')
     }
   }
 })
