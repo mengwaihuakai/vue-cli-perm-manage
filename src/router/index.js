@@ -37,8 +37,8 @@ route.beforeEach((to, from, next) => {
   if (to.path === '/login' || to.path === '/') {
     next()
   } else {
-    // 获取store中数据roles
-    let perms = Store.state.perms
+    // 获取store中数据perms  如果页面刷新了则到sessionStorage中取
+    let perms = Store.state.perms.length > 0 ? Store.state.perms : JSON.parse(sessionStorage.getItem('store')).perms
     if (!perms || perms.length === 0) {
       next('/login')
     } else {
