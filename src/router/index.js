@@ -37,8 +37,13 @@ route.beforeEach((to, from, next) => {
   if (to.path === '/login' || to.path === '/') {
     next()
   } else {
-    // 获取store中数据perms  如果页面刷新了则到sessionStorage中取
-    let perms = Store.state.perms.length > 0 ? Store.state.perms : JSON.parse(sessionStorage.getItem('store')).perms
+    let perms = null
+    if (!document.cookie) { // 关闭浏览器窗口的时候cookie会消失，清空浏览器缓存在localStorage的数据
+      window.localStorage.removeItem('store')
+    } else {
+      // 获取store中数据perms  如果页面刷新了则到sessionStorage中取
+      perms = (Store.state && Store.state.perms && Store.state.perms.length > 0) ? Store.state.perms : (window.localStorage.getItem('store') ? JSON.parse(window.localStorage.getItem('store')).perms : null)
+    }
     if (!perms || perms.length === 0) {
       next('/login')
     } else {

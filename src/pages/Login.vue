@@ -65,6 +65,8 @@
                       //vm.$store.commit('如果不用mapMutations, 调用vuex中mutation的方法');
                       vm.addPerms(r.data.resultMap.perms);//前提是：...mapActions(['addPerms'])
                       vm.setAccount(r.data.resultMap.account);
+                      window.localStorage.setItem("store",JSON.stringify(this.$store.state))
+                      document.cookie = r.data.resultMap.account; //1、保证页面刷新或开新页面不用重新登陆，vuex state中数据会在localstorange中存储，// 2、保证浏览器整个关闭localstorage清除，用cookie做标记
                       vm.$router.push({path: '/index'});//js中设置路由跳转
                     } else {
                       vm.hint = r.data.message;
