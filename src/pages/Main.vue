@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-page sidebar-close">
     <header class="main-header">
       <nav class="navbar navbar-static-top">
         <span class="menu-icon" id="menuIcon">
@@ -8,11 +8,14 @@
         <span class="logo">
             SUBSCRIBE
         </span>
-        <ol class="breadcrumb" id="breadcrumb">
-          <li id="breadcrumbModule"></li>
-          <li id="breadcrumbModuleSec" class="hide"></li>
-          <li class="active" id="breadcrumbPage"></li>
-        </ol>
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item v-for="(item, index) in $route.meta.breadcrumb" :key="index">
+            <router-link v-if="item.url" :to="item.url">{{item.name}}</router-link>
+            <a v-else>
+              {{item.name}}
+            </a>
+          </el-breadcrumb-item>
+        </el-breadcrumb>
         <span class="login-info float-right">
             <a @click="logout">Logout</a>
       </span>
@@ -88,7 +91,7 @@
       },
       mounted () {
         document.querySelector("#menuIcon").addEventListener("click", function () {
-          document.querySelector("body").classList.toggle("sidebar-close");
+          document.querySelector(".main-page").classList.toggle("sidebar-close");
         });
       }
     }

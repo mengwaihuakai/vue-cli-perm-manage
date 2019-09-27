@@ -12,9 +12,3 @@
         name: "Index"
     }
 </script>
-
-<style>
-  .main-header .breadcrumb>li+li:before{
-    content: "";
-  }
-</style>

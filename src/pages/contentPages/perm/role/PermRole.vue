@@ -1,12 +1,12 @@
 <template>
-<div>
-  sjdsjd
-</div>
+  <div>
+    permrole
+  </div>
 </template>
 
 <script>
     export default {
-        name: "PermUser"
+        name: "PermRole"
     }
 </script>
 

@@ -4,8 +4,9 @@ import Store from '../store'
 import Login from '@/pages/Login' // 写法一
 import Main from '@/pages/Main'
 import PermError from '@/pages/contentPages/perm/PermError'
-import PermUser from '@/pages/contentPages/perm/PermUser'
-import PermRole from '@/pages/contentPages/perm/PermRole'
+import PermUser from '@/pages/contentPages/perm/user/PermUser'
+import PermRole from '@/pages/contentPages/perm/role/PermRole'
+import AddRole from '@/pages/contentPages/perm/role/AddRole'
 
 Vue.use(Router)
 
@@ -37,16 +38,43 @@ let route = new Router({
         },
         {
           path: 'perm/user/permUser',
+          name: 'permUser',
           component: PermUser,
           meta: {
-            perms: ['perm_user']
+            perms: ['perm_user'],
+            breadcrumb: [
+              {
+                name: 'permUser'
+              }
+            ]
           }
         },
         {
           path: 'perm/role/permRole',
           component: PermRole,
           meta: {
-            perms: ['perm_role']
+            perms: ['perm_role'],
+            breadcrumb: [
+              {
+                name: 'permRole'
+              }
+            ]
+          }
+        },
+        {
+          path: 'perm/role/addRole',
+          component: AddRole,
+          meta: {
+            perms: ['perm_role'],
+            breadcrumb: [
+              {
+                name: 'permRole',
+                url: '/perm/role/permRole'
+              },
+              {
+                name: 'addRole'
+              }
+            ]
           }
         }]
     }

@@ -127,18 +127,12 @@ body{
     cursor: pointer;
   }
 
-  .breadcrumb{
+  .el-breadcrumb{
     margin-left: 3.54vw;
     display: inline-block;
 
-    &>li{
-      display: inline-block;
-      line-height: 50px;
-    }
-
-    &>li+li:before {
-      padding: 0 0.69vw;
-      content: ">\00a0";
+    .el-breadcrumb__item .el-breadcrumb__inner a{
+      color: #606266;
     }
   }
 
@@ -185,7 +179,6 @@ body{
 
   ul .treeview-item {
     margin: 3px 0;
-    border-radius: 24px;
     font-size: 13px;
     font-family: LucidaGrande;
     cursor: pointer;
@@ -201,6 +194,7 @@ body{
     :hover,
     .active {
       background-color: #4C56C0;
+      border-radius: 24px;
 
       span {
         background-color: transparent;
