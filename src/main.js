@@ -18,6 +18,8 @@ axios.defaults.baseURL = '/'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 Vue.prototype.api = axios
 
+Vue.prototype.$store = store
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

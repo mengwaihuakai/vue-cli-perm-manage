@@ -9,8 +9,8 @@ const store = new Vuex.Store({
     account: null
   },
   getters: { // 类似vue的computer
-    getPerms: state => state.perms,
-    getAccount: state => state.account
+    getPerms: state => { return state.perms },
+    getAccount: state => { return state.account }
   },
   mutations: {
     addPerms (state, perms) { // state指上面定义的state对象

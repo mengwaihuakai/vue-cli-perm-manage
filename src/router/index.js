@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import Store from '../store'
 import Login from '@/pages/Login' // 写法一
 import Main from '@/pages/Main'
+import PermError from '@/pages/contentPages/perm/PermError'
+import PermUser from '@/pages/contentPages/perm/PermUser'
+import PermRole from '@/pages/contentPages/perm/PermRole'
 
 Vue.use(Router)
 
@@ -20,14 +23,32 @@ let route = new Router({
     },
     {
       path: '/',
-      name: 'Index',
       component: Main,
       children: [
         {
           path: 'index',
+          name: 'Index',
           component: resolve => { return require(['../pages/contentPages/Index.vue'], resolve) } // 写法二
-        }],
-      meta: 'offer'// 权限名称
+        },
+        {
+          path: 'permError',
+          name: 'PermError',
+          component: PermError
+        },
+        {
+          path: 'perm/user/permUser',
+          component: PermUser,
+          meta: {
+            perms: ['perm_user']
+          }
+        },
+        {
+          path: 'perm/role/permRole',
+          component: PermRole,
+          meta: {
+            perms: ['perm_role']
+          }
+        }]
     }
   ]
 })
@@ -48,10 +69,17 @@ route.beforeEach((to, from, next) => {
       next('/login')
     } else {
       // 通过indexOf判断 perms中是否包含meta 从而确定是否跳转
-      if (perms.includes(to.matched[0].meta)) {
+      let contains = true
+      let metaPerms = to.meta.perms
+      if (metaPerms) {
+        contains = metaPerms.some(item => {
+          return perms.includes(item)
+        })
+      }
+      if (contains) {
         next()
       } else {
-        next('/login')
+        next('/permError')
       }
     }
   }

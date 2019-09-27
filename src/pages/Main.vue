@@ -25,21 +25,21 @@
       <section class="sidebar">
         <ul class="sidebar-menu">
 
-          <li class="treeview" id="perm">
+          <li class="treeview" id="perm" v-if="containsPerms(['perm_user', 'perm_role'])">
             <p>
               <img class="menu-icon" src="../assets/images/menu/perm-icon.svg">
               <span>Permission</span>
             </p>
             <ul>
-              <li class="treeview-item" id="permUser">
-                <a href="/perm/user/permUser">
+              <li class="treeview-item" id="permUser" v-if="containsPerms(['perm_user'])">
+                <router-link to="/perm/user/permUser">
                   <span>User Manage</span>
-                </a>
+                </router-link>
               </li>
-              <li class="treeview-item" id="permRole">
-                <a href="/perm/role/permRole">
+              <li class="treeview-item" id="permRole" v-if="containsPerms(['perm_role'])">
+                <router-link to="/perm/role/permRole">
                   <span>Role Manage</span>
-                </a>
+                </router-link>
               </li>
             </ul>
           </li>
@@ -47,6 +47,9 @@
       </section>
       <div style="width: 100%; height: 100px"></div>
     </aside>
+    <div class="content">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -56,7 +59,7 @@
     export default {
       name: "Main",
       computed: {
-        ...mapGetters(['getAccount']),
+        ...mapGetters(['getAccount', 'getPerms'])
       },
       methods: {
         ...mapActions(['truncatState']),
@@ -75,6 +78,12 @@
               vm.truncatState();
               vm.$router.push({path: '/login'});
             })
+        },
+        containsPerms (perms) {
+          let vm = this;
+          return perms.some(item => {
+            return vm.getPerms.includes(item)
+          })
         }
       },
       mounted () {
