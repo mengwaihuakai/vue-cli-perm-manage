@@ -63,7 +63,16 @@ route.beforeEach((to, from, next) => {
       window.localStorage.removeItem('store')
     } else {
       // 获取store中数据perms  如果页面刷新了则到sessionStorage中取
-      perms = (Store.state && Store.state.perms && Store.state.perms.length > 0) ? Store.state.perms : (window.localStorage.getItem('store') ? JSON.parse(window.localStorage.getItem('store')).perms : null)
+      if (Store.state && Store.state.perms && Store.state.perms.length > 0) {
+        perms = Store.state.perms
+      } else {
+        if (window.localStorage.getItem('store')) {
+          let state = JSON.parse(window.localStorage.getItem('store'))
+          perms = state.perms
+          Store.commit('addPerms', perms)
+          Store.commit('setAccount', state.account)
+        }
+      }
     }
     if (!perms || perms.length === 0) {
       next('/login')
