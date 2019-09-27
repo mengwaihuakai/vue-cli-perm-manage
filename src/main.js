@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import _ from 'lodash'
 import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -17,7 +18,7 @@ axios.create({
 axios.defaults.baseURL = '/'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 Vue.prototype.api = axios
-
+Vue.prototype._ = _
 Vue.prototype.$store = store
 
 /* eslint-disable no-new */

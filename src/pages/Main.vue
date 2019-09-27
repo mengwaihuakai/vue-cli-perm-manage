@@ -28,18 +28,18 @@
       <section class="sidebar">
         <ul class="sidebar-menu">
 
-          <li class="treeview" id="perm" v-if="containsPerms(['perm_user', 'perm_role'])">
+          <li class="treeview" v-if="containsPerms(['perm_user', 'perm_role'])">
             <p>
               <img class="menu-icon" src="../assets/images/menu/perm-icon.svg">
               <span>Permission</span>
             </p>
             <ul>
-              <li class="treeview-item" id="permUser" v-if="containsPerms(['perm_user'])">
+              <li class="treeview-item" v-if="containsPerms(['perm_user'])">
                 <router-link to="/perm/user/permUser">
                   <span>User Manage</span>
                 </router-link>
               </li>
-              <li class="treeview-item" id="permRole" v-if="containsPerms(['perm_role'])">
+              <li class="treeview-item" v-if="containsPerms(['perm_role'])">
                 <router-link to="/perm/role/permRole">
                   <span>Role Manage</span>
                 </router-link>
