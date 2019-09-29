@@ -2,7 +2,7 @@
   <div>
     <div class="operate-row filter-row">
       <el-input type="text" clearable placeholder="Search Account" v-model="accountFilter"  class="filter-item"></el-input>
-      <el-button type="primary" class="operate-item" icon="el-icon-plus" onclick="window.location.href='${rc.contextPath}/perm/user/toAddUser'">Create</el-button>
+      <el-button type="primary" class="operate-item" icon="el-icon-plus" @click="create">Create</el-button>
       <el-button @click="filterReport" type="primary" icon="el-icon-search" class="operate-item search">Search</el-button>
     </div>
     <div class="table-row">
@@ -96,14 +96,11 @@
         }
       },
       methods: {
+        create () {
+          this.$router.push({path: 'toAddUser'})
+        },
         edit (id) {
-          let f = document.createElement('form');
-          f.style.display='none';
-          f.action='toEditUser';
-          f.method='post';
-          f.innerHTML='<input type="hidden" name="id" value='+id+'>';
-          document.body.appendChild(f);
-          f.submit();
+          this.$router.push({path: 'toEditUser', query: {id: id}})
         },
         toDel (id, account){
           this.dialogMessage = account === "admin" ? ("该账号:" + account + "不可删除！") : ("确定要删除账号:" + account + "的用户吗？");
@@ -116,7 +113,7 @@
           vm.loading = true;
           vm.dialogVisible = false;
           if(vm.dialogAccount !== "admin") {
-            vm.api.post('deleteUser', {id: vm.dialogId})
+            vm.api.post('perm/user/deleteUser', {id: vm.dialogId})
               .then(function (r) {
                 vm.loading = false;
                 vm.$alert(r.data.message, '提示', {
