@@ -163,7 +163,7 @@
         refreshReportData () {
           let vm = this;
           vm.loading = true;
-          vm.api.post('/search', {})
+          vm.api.post('perm/user/search', {})
             .then(function (r) {
               vm.loading = false;
               if (r.status && r.status === 200) {
