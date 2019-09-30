@@ -49,7 +49,7 @@
 <script>
   let ref;
   export default {
-    name: "AddRole",
+    name: "EditRole",
     data () {
       return {
         role: {
@@ -94,7 +94,7 @@
     mounted (){
       ref = this.$refs;
       //组织permlisttable数据
-      this.getRoleList();
+      this.getPermListAndRoleInfo();
     },
     methods: {
       submitForm (formName) {
@@ -102,18 +102,18 @@
         ref[formName].validate((valid) => {
           if (valid) {
             vm.api.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
-            vm.api.post("perm/role/addRole", vm.$qs.stringify(vm.role, { arrayFormat: 'repeat' }))
+            vm.api.post("perm/role/editRole", vm.$qs.stringify(vm.role, { arrayFormat: 'repeat' }))
               .then((r) => {
                 vm.loading = false;
                 if (r.data.code === 0){
-                  vm.$alert('创建role成功', {
+                  vm.$alert('编辑role成功', {
                     center: true,
                     callback: action => {
                       vm.$router.push({path: 'permRole'})
                     }
                   });
                 } else {
-                  vm.$alert('创建role失败', {
+                  vm.$alert('编辑role失败', {
                     center: true,
                     callback: action => {}
                   })
@@ -169,6 +169,30 @@
         }
         this.permissionTableData = tableData;
       },
+      editPageData (data) {
+        debugger
+        let vm = this;
+        vm.role.id = data.id;
+        vm.role.name = data.name;
+        vm.role.code = data.code;
+        vm.role.status = data.status;
+        vm.role.permissionIdArr = [];
+        data.permissionList.forEach(item => {
+          vm.role.permissionIdArr.push(item.id)
+        });
+        //permissionTableData是否需要全选
+        vm.permissionTableData = vm.permissionTableData.map(fItem => {
+          let childPermIdArr = [];
+          fItem.childPermList.forEach(cItem => {
+            childPermIdArr.push(cItem.id);
+          });
+          let selectAll = childPermIdArr.every(pItem => {
+            return vm.role.permissionIdArr.includes(pItem);
+          });
+          fItem.all = selectAll ? ['all'] : [];
+          return fItem;
+        })
+      },
       selectAll (fatherCode, all) {//全选联动
         let vm = this;
         vm.permissionTableData.forEach(pItem => {
@@ -194,13 +218,14 @@
           return item;
         })
       },
-      getRoleList () {
+      getPermListAndRoleInfo () {
         let vm = this;
         vm.loading = true;
-        vm.api.get("/perm/role/getPermListAndRoleInfo")
+        vm.api.get("/perm/role/getPermListAndRoleInfo?id=" + vm.$route.query.id)
           .then((r) => {
             vm.loading = false;
             if (r.data.code === 0){
+              vm.editPageData(r.data.resultMap.roleInfo);
               vm.generatePermTableData(r.data.resultMap.permList);
               if (!vm.permissionTableData || vm.permissionTableData.length === 0){
                 vm.$alert('请先在角色管理模块 创建角色', {
@@ -227,17 +252,17 @@
   }
 </script>
 
-<style scoped lang="scss">
+<style scoped>
   .el-table{
     width: 700px;
     font-size: 16px;
     border: 1px solid #e2e1e1;
     border-bottom: none;
 
-    td, th.is-leaf {
-      border-bottom: 1px solid #e2e1e1;
-      padding: 18px 20px;
-    }
+  td, th.is-leaf {
+    border-bottom: 1px solid #e2e1e1;
+    padding: 18px 20px;
+  }
   }
 
   .form.form-inline-center .el-form-item {

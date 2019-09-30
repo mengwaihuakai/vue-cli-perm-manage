@@ -9,6 +9,7 @@ import PermRole from '@/pages/contentPages/perm/role/PermRole'
 import AddRole from '@/pages/contentPages/perm/role/AddRole'
 import AddUser from '@/pages/contentPages/perm/user/AddUser'
 import EditUser from '@/pages/contentPages/perm/user/EditUser'
+import EditRole from '@/pages/contentPages/perm/role/EditRole'
 
 Vue.use(Router)
 
@@ -107,6 +108,22 @@ let route = new Router({
               },
               {
                 name: 'addRole'
+              }
+            ]
+          }
+        },
+        {
+          path: 'perm/role/toEditRole',
+          component: EditRole,
+          meta: {
+            perms: ['perm_role'],
+            breadcrumb: [
+              {
+                name: 'permRole',
+                url: '/perm/role/permRole'
+              },
+              {
+                name: 'editRole'
               }
             ]
           }
