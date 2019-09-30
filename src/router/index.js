@@ -10,6 +10,7 @@ import AddRole from '@/pages/contentPages/perm/role/AddRole'
 import AddUser from '@/pages/contentPages/perm/user/AddUser'
 import EditUser from '@/pages/contentPages/perm/user/EditUser'
 import EditRole from '@/pages/contentPages/perm/role/EditRole'
+import UpdatePwd from '@/pages/contentPages/perm/UpdatePwd'
 
 Vue.use(Router)
 
@@ -38,6 +39,11 @@ let route = new Router({
           path: 'permError',
           name: 'PermError',
           component: PermError
+        },
+        {
+          path: 'updatePwd',
+          name: 'UpdatePwd',
+          component: UpdatePwd
         },
         {
           path: 'perm/user/permUser',
