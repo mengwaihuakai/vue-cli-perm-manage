@@ -88,7 +88,8 @@
     },
     mounted (){
       ref = this.$refs;
-      this.getRoleList()
+      this.$emit('sideBarClose'); // sideBarClose:菜单栏隐藏
+      this.getRoleList();
     },
     methods: {
       submitForm (formName) {

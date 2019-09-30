@@ -1,8 +1,8 @@
 <template>
-  <div class="main-page sidebar-close">
+  <div class="main-page sidebar-close" ref="mainPage">
     <header class="main-header">
       <nav class="navbar navbar-static-top">
-        <span class="menu-icon" id="menuIcon">
+        <span class="menu-icon" ref="menuIcon">
             <i class="el-icon-s-unfold"></i>
         </span>
         <span class="logo">
@@ -51,7 +51,8 @@
       <div style="width: 100%; height: 100px"></div>
     </aside>
     <div class="content">
-      <router-view></router-view>
+      <!--sideBarClose:菜单栏隐藏-->
+      <router-view  @sideBarClose="sideBarClose"></router-view>
       <div style="width: 100%; height: 30px"></div>
     </div>
   </div>
@@ -88,13 +89,17 @@
           return perms.some(item => {
             return vm.getPerms.includes(item)
           })
+        },
+        sideBarClose () {
+          this.$refs['mainPage'].classList.add("sidebar-close");
         }
       },
       mounted () {
-        document.querySelector("#menuIcon").addEventListener("click", function () {
-          document.querySelector(".main-page").classList.toggle("sidebar-close");
+        let vm = this;
+        vm.$refs['menuIcon'].addEventListener("click", function () {
+          vm.$refs['mainPage'].classList.toggle("sidebar-close");
         });
-      }
+      },
     }
 </script>
 

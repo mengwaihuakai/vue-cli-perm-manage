@@ -9,7 +9,10 @@
 
 <script>
     export default {
-        name: "PermError"
+      name: "PermError",
+      mounted() {
+        this.$emit('sideBarClose'); // sideBarClose:菜单栏隐藏
+      }
     }
 </script>
 

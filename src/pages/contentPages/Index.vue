@@ -9,6 +9,9 @@
 
 <script>
     export default {
-        name: "Index"
+      name: "Index",
+      mounted() {
+        this.$emit('sideBarClose'); // sideBarClose:菜单栏隐藏
+      }
     }
 </script>

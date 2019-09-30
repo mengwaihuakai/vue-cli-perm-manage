@@ -211,7 +211,8 @@
           }
         }
       },
-      mounted () {
+      mounted() {
+        this.$emit('sideBarClose'); // sideBarClose:菜单栏隐藏
         this.refreshReportData();
       }
     }

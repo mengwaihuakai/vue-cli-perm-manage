@@ -90,6 +90,7 @@
     },
     mounted (){
       ref = this.$refs;
+      this.$emit('sideBarClose'); // sideBarClose:菜单栏隐藏
       this.getRoleListAndUserInfo();
     },
     methods: {
