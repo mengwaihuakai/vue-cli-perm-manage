@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import qs from 'qs'
 import _ from 'lodash'
 import store from './store'
 import ElementUI from 'element-ui'
@@ -18,6 +19,7 @@ axios.create({
 axios.defaults.baseURL = '/'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 Vue.prototype.api = axios
+Vue.prototype.$qs = qs // 即可直接使用  this.$qs
 Vue.prototype._ = _
 Vue.prototype.$store = store
 

@@ -1158,7 +1158,7 @@ body{
 
 .el-radio {
   .el-radio__label,
-  &is-checked .el-radio__label,
+  &.is-checked .el-radio__label,
   .el-checkbox__label,
   &.is-checked .el-checkbox__label{
     color: #353536;
@@ -1188,12 +1188,12 @@ body{
   &.is-checked .el-radio__inner {
     border: 2px solid #4C56C0;
     background: none;
-  }
 
-  &::after {
-    width: 11px;
-    height: 11px;
-    background-color: #4C56C0;
+    &::after {
+      width: 11px;
+      height: 11px;
+      background-color: #4C56C0;
+    }
   }
 
   .el-radio__inner {

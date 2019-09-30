@@ -52,6 +52,7 @@
     </aside>
     <div class="content">
       <router-view></router-view>
+      <div style="width: 100%; height: 30px"></div>
     </div>
   </div>
 </template>
